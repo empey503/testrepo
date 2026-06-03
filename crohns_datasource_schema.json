@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CrohnsDataSource",
+  "description": "Schema for scraped data sources powering the Crohn's disease Q&A application",
+  "type": "object",
+  "properties": {
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "url",
+          "scraped_content",
+          "confidence_pct",
+          "scraped_at",
+          "keywords",
+          "notes"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for this source record (UUID)"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Source URL that was scraped"
+          },
+          "scraped_content": {
+            "type": "string",
+            "description": "Full article copy extracted from the URL"
+          },
+          "scrape_method": {
+            "type": "string",
+            "enum": ["scraped", "manual"],
+            "description": "How the content was captured: 'scraped' = automated fetch, 'manual' = copy-pasted by hand"
+          },
+          "confidence_pct": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Estimated percentage of article content successfully scraped and accurately stored"
+          },
+          "scraped_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO 8601 timestamp of when the URL was scraped (e.g. 2026-06-03T14:32:00Z)"
+          },
+          "keywords": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Auto-generated keywords extracted from the article content"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Manual notes to be added in the future (e.g. source quality, update reminders)",
+            "default": ""
+          }
+        }
+      }
+    }
+  }
+}
